@@ -615,7 +615,7 @@ impl Remote {
         }
 
         // Returns true if the mailbox should be ignored if this role appears *any* point in the
-        // path heirarchy. Namely, if the user has explicitly disabled tags for this role.
+        // path hierarchy. Namely, if the user has explicitly disabled tags for this role.
         let should_ignore_mailbox_role = |maybe_role: &Option<MailboxRole>| match maybe_role {
             Some(x) => match x {
                 MailboxRole::Important => tags_config.important.is_empty(),

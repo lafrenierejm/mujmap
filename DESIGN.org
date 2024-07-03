@@ -85,7 +85,7 @@ Now for each =Email= ID in the queue, call =Email/get= to retrieve the
 properties of interest listed above. If at any point =Email/get= returns a new
 =state=, jump back to the [[#querying][querying]] algorithm with the new =state=, appending to
 the end of the queue. Thus if there is another update on the server to an
-=Email= we've already called =Email/get= for, we can simpy call it again and
+=Email= we've already called =Email/get= for, we can simply call it again and
 update the entry in our list.
 
 *** Downloading mail blobs
