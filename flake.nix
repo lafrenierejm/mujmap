@@ -40,26 +40,20 @@
         filter = filterSrc;
       };
 
-      buildInputs = with pkgs;
-        lib.optionals stdenv.isDarwin [
-          darwin.apple_sdk.frameworks.Security
-          pkg-config
-        ];
-
       nativeBuildInputs = with pkgs;
         lib.optionals stdenv.isDarwin [
-          # darwin-specific inputs
+          pkg-config
           clang
           libiconv
         ];
 
       # Build *just* the cargo dependencies, so we can reuse
       # all of that work (e.g. via cachix) when running in CI
-      cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs nativeBuildInputs;};
+      cargoArtifacts = craneLib.buildDepsOnly {inherit src nativeBuildInputs;};
 
       # Build ripsecrets itself, reusing the dependency artifacts from above.
       mujmap = craneLib.buildPackage {
-        inherit cargoArtifacts src buildInputs nativeBuildInputs;
+        inherit cargoArtifacts src nativeBuildInputs;
         propagatedBuildInputs = [pkgs.notmuch];
         doCheck = false;
         meta = with pkgs.lib; {
@@ -111,7 +105,7 @@
 
       # `nix develop`
       devShells.default = pkgs.mkShell {
-        inherit buildInputs nativeBuildInputs;
+        inherit nativeBuildInputs;
         inherit (self.checks.${system}.pre-commit) shellHook;
         inputsFrom = builtins.attrValues self.checks;
         packages = with pkgs; [cargo clippy rustc];
