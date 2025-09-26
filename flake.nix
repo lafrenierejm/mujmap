@@ -2,10 +2,7 @@
   description = "Bridge for synchronizing email and tags between JMAP and notmuch";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
-    crane = {
-      url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    crane.url = "github:ipetkov/crane";
     flake-utils.url = "github:numtide/flake-utils";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
